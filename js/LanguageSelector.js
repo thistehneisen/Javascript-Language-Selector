@@ -50,9 +50,11 @@ class LanguageSelector {
 		var values = Object.values(lang);
 
 		for (var i = 0; i <= keys.length - 1; i++) {
-			$("body").children().each(function () {
-		    	$(this).html( $(this).html().replace(keys[i],values[i]) );
-			});					
+		    $('body :not(script)').contents().filter(function() {
+		      return this.nodeType === 3;
+		    }).replaceWith(function() {
+			return this.nodeValue.replace(keys[i], values[i]);
+		    });
 		}
 		if (rtl.includes(this.getLang())) {
 			document.body.style.direction = 'rtl';
